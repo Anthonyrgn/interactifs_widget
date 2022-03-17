@@ -46,7 +46,21 @@ class InteractifPageState extends State<InteractifPage>{
                     textButtonText(),
                   ],
                 )
-            )
+            ),
+            ElevatedButton(
+                onPressed: () {
+                  print("Salut");
+                },
+                child: const Text("Elevated", style: TextStyle(color: Colors.red),),
+              onLongPress: () {
+                  print("Salut loooong");
+              },
+              style: ElevatedButton.styleFrom(
+                primary: Colors.yellow,
+                elevation: 10,
+                shadowColor: Colors.green,
+              ),
+            ),
           ],
         ),),
         floatingActionButton: FloatingActionButton(
