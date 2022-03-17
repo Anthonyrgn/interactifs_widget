@@ -8,22 +8,25 @@ class InteractifPage extends StatefulWidget {
   InteractifPageState createState() => InteractifPageState();
 }
 
-class InteractifPageState extends State<InteractifPage>{
-
+class InteractifPageState extends State<InteractifPage> {
   Color backgroundColor = Colors.white;
   Color textColor = Colors.black;
   bool textButtonPressed = true;
   IconData icon = Icons.favorite;
   String prenom = "";
+  late TextEditingController controller;
+  bool switchValue = true;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    controller = TextEditingController();
   } // Tout ce que l'on va faire pendant l'initialisation du Widget
 
   @override
   void dispose() {
+    controller.dispose();
     // TODO: implement dispose
     super.dispose();
   } //Tout ce que l'on va faire quand le widget sera dispose. Quand le Widget sera
@@ -34,30 +37,35 @@ class InteractifPageState extends State<InteractifPage>{
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
-        title: Text(updateAppBarText()),),
-        body: Center(child: Column(
+        title: Text(updateAppBarText()),
+      ),
+      body: Center(
+        child: Column(
           children: [
             TextButton(
-                onPressed: updateAppBar,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Icon(Icons.work),
-                    const Padding(padding: EdgeInsets.only(left: 15)),
-                    textButtonText(),
-                  ],
-                ),
+              onPressed: updateAppBar,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(Icons.work),
+                  const Padding(padding: EdgeInsets.only(left: 15)),
+                  textButtonText(),
+                ],
+              ),
               style: TextButton.styleFrom(
                 primary: Colors.teal,
               ),
             ),
             ElevatedButton(
-                onPressed: () {
-                  print("Salut");
-                },
-                child: const Text("Elevated", style: TextStyle(color: Colors.red),),
+              onPressed: () {
+                print("Salut");
+              },
+              child: const Text(
+                "Elevated",
+                style: TextStyle(color: Colors.red),
+              ),
               onLongPress: () {
-                  print("Salut loooong");
+                print("Salut loooong");
               },
               style: ElevatedButton.styleFrom(
                 primary: Colors.yellow,
@@ -65,14 +73,14 @@ class InteractifPageState extends State<InteractifPage>{
                 shadowColor: Colors.green,
               ),
             ),
-           IconButton(
-               onPressed: (){
+            IconButton(
+              onPressed: () {
                 setIcon();
-           },
-             icon: Icon(icon),
-               color: Colors.pink,
-                splashColor: Colors.pinkAccent,
-           ),
+              },
+              icon: Icon(icon),
+              color: Colors.pink,
+              splashColor: Colors.pinkAccent,
+            ),
             TextField(
               obscureText: false,
               decoration: InputDecoration(
@@ -88,42 +96,78 @@ class InteractifPageState extends State<InteractifPage>{
                 });
               },
             ),
-            Text(prenom)
+            Text(prenom),
+            TextField(
+              controller: controller,
+              decoration: InputDecoration(
+                hintText: "Entre votre nom",
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(25),
+                ),
+              ),
+              onChanged: ((newValue) =>
+                  setState(() => print("Done: $newValue"))),
+            ),
+            Text(controller.text),
+            Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text((switchValue)
+                    ? "J'aime les chat"
+                    : "Les chats sont démoniaque"),
+                Switch(
+                    value: switchValue,
+                    activeColor: Colors.green,
+                    inactiveTrackColor: Colors.red,
+                    onChanged: ((bool) {
+                      setState(() {
+                        switchValue = bool;
+                      });
+                    }))
+              ],
+            )
           ],
-        ),),
-        floatingActionButton: FloatingActionButton(
-          onPressed: updateColors,
-          child: const Icon(Icons.build),
         ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.miniCenterFloat,
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: updateColors,
+        child: const Icon(Icons.build),
+      ),
+      floatingActionButtonLocation:
+          FloatingActionButtonLocation.miniCenterFloat,
     );
   }
 
-  updateColors(){
+  updateColors() {
     return setState(() {
-      backgroundColor = (backgroundColor == Colors.white) ? Colors.black : Colors.white;
+      backgroundColor =
+          (backgroundColor == Colors.white) ? Colors.black : Colors.white;
       textColor = (textColor == Colors.black) ? Colors.white : Colors.black;
     });
   }
 
-  updateAppBar(){
+  updateAppBar() {
     setState(() => textButtonPressed = !textButtonPressed);
   }
 
-  String updateAppBarText(){
-    return (textButtonPressed)? "Je m'y connais un peu" : "Les intéractifs";
+  String updateAppBarText() {
+    return (textButtonPressed) ? "Je m'y connais un peu" : "Les intéractifs";
   }
 
-  Text textButtonText(){
-    return const Text("Je suis un TextButton", style: TextStyle(
-      //color: Colors.pink,
-      //backgroundColor: Colors.grey
-    ),);
+  Text textButtonText() {
+    return const Text(
+      "Je suis un TextButton",
+      style: TextStyle(
+          //color: Colors.pink,
+          //backgroundColor: Colors.grey
+          ),
+    );
   }
 
-  setIcon(){
+  setIcon() {
     setState(() {
-        icon = (icon == Icons.favorite) ? Icons.favorite_border : Icons.favorite;
+      icon = (icon == Icons.favorite) ? Icons.favorite_border : Icons.favorite;
     });
   }
 }
