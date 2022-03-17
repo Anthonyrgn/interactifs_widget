@@ -134,7 +134,7 @@ class InteractifPageState extends State<InteractifPage> {
               });
             }),
               thumbColor: Colors.deepPurple,
-              inactiveColor: Colors.brown,
+              inactiveColor: Colors.green,
               activeColor: Colors.yellow,
             ),
             Text("Valeur : ${sliderValue.toInt()}"),
