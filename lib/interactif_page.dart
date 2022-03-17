@@ -9,6 +9,10 @@ class InteractifPage extends StatefulWidget {
 }
 
 class InteractifPageState extends State<InteractifPage>{
+
+  Color backgroundColor = Colors.white;
+  Color textColor = Colors.black;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -25,10 +29,22 @@ class InteractifPageState extends State<InteractifPage>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: backgroundColor,
       appBar: AppBar(
         title: Text("Les interactifs"),),
-        body: Center(child: Text("Apprendre les intéractifs"),
-      ),
+        body: Center(child: Text("Apprendre les intéractifs", style: TextStyle(color: textColor),),),
+        floatingActionButton: FloatingActionButton(
+          onPressed: updateColors,
+          child: Icon(Icons.build),
+        ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.miniCenterFloat,
     );
+  }
+
+  updateColors(){
+    return setState(() {
+      backgroundColor = (backgroundColor == Colors.white) ? Colors.black : Colors.white;
+      textColor = (textColor == Colors.black) ? Colors.white : Colors.black;
+    });
   }
 }
