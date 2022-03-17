@@ -13,6 +13,7 @@ class InteractifPageState extends State<InteractifPage>{
   Color backgroundColor = Colors.white;
   Color textColor = Colors.black;
   bool textButtonPressed = true;
+  IconData icon = Icons.favorite;
 
 
   @override
@@ -45,7 +46,10 @@ class InteractifPageState extends State<InteractifPage>{
                     const Padding(padding: EdgeInsets.only(left: 15)),
                     textButtonText(),
                   ],
-                )
+                ),
+              style: TextButton.styleFrom(
+                primary: Colors.teal,
+              ),
             ),
             ElevatedButton(
                 onPressed: () {
@@ -61,6 +65,14 @@ class InteractifPageState extends State<InteractifPage>{
                 shadowColor: Colors.green,
               ),
             ),
+           IconButton(
+               onPressed: (){
+                setIcon();
+           },
+             icon: Icon(icon),
+               color: Colors.pink,
+                splashColor: Colors.pinkAccent,
+           )
           ],
         ),),
         floatingActionButton: FloatingActionButton(
@@ -88,8 +100,14 @@ class InteractifPageState extends State<InteractifPage>{
 
   Text textButtonText(){
     return const Text("Je suis un TextButton", style: TextStyle(
-      color: Colors.pink,
-      backgroundColor: Colors.grey
+      //color: Colors.pink,
+      //backgroundColor: Colors.grey
     ),);
+  }
+
+  setIcon(){
+    setState(() {
+        icon = (icon == Icons.favorite) ? Icons.favorite_border : Icons.favorite;
+    });
   }
 }
