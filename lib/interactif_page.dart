@@ -16,6 +16,7 @@ class InteractifPageState extends State<InteractifPage> {
   String prenom = "";
   late TextEditingController controller;
   bool switchValue = true;
+  double sliderValue = 50;
 
   @override
   void initState() {
@@ -126,7 +127,17 @@ class InteractifPageState extends State<InteractifPage> {
                       });
                     }))
               ],
-            )
+            ),
+            Slider(value: sliderValue, min: 0, max: 100, onChanged: ((newValue){
+              setState(() {
+                sliderValue = newValue;
+              });
+            }),
+              thumbColor: Colors.deepPurple,
+              inactiveColor: Colors.brown,
+              activeColor: Colors.yellow,
+            ),
+            Text("Valeur : ${sliderValue.toInt()}"),
           ],
         ),
       ),
