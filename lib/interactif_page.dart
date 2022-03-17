@@ -119,7 +119,7 @@ class InteractifPageState extends State<InteractifPage> {
                 Switch(
                     value: switchValue,
                     activeColor: Colors.green,
-                    inactiveTrackColor: Colors.pink,
+                    inactiveTrackColor: Colors.red,
                     onChanged: ((bool) {
                       setState(() {
                         switchValue = bool;
