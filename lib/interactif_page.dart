@@ -12,6 +12,8 @@ class InteractifPageState extends State<InteractifPage>{
 
   Color backgroundColor = Colors.white;
   Color textColor = Colors.black;
+  bool textButtonPressed = true;
+
 
   @override
   void initState() {
@@ -31,11 +33,25 @@ class InteractifPageState extends State<InteractifPage>{
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
-        title: Text("Les interactifs"),),
-        body: Center(child: Text("Apprendre les intéractifs", style: TextStyle(color: textColor),),),
+        title: Text(updateAppBarText()),),
+        body: Center(child: Column(
+          children: [
+            TextButton(
+                onPressed: updateAppBar,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Icon(Icons.work),
+                    const Padding(padding: EdgeInsets.only(left: 15)),
+                    textButtonText(),
+                  ],
+                )
+            )
+          ],
+        ),),
         floatingActionButton: FloatingActionButton(
           onPressed: updateColors,
-          child: Icon(Icons.build),
+          child: const Icon(Icons.build),
         ),
       floatingActionButtonLocation: FloatingActionButtonLocation.miniCenterFloat,
     );
@@ -46,5 +62,20 @@ class InteractifPageState extends State<InteractifPage>{
       backgroundColor = (backgroundColor == Colors.white) ? Colors.black : Colors.white;
       textColor = (textColor == Colors.black) ? Colors.white : Colors.black;
     });
+  }
+
+  updateAppBar(){
+    setState(() => textButtonPressed = !textButtonPressed);
+  }
+
+  String updateAppBarText(){
+    return (textButtonPressed)? "Je m'y connais un peu" : "Les intéractifs";
+  }
+
+  Text textButtonText(){
+    return const Text("Je suis un TextButton", style: TextStyle(
+      color: Colors.pink,
+      backgroundColor: Colors.grey
+    ),);
   }
 }
