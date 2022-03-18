@@ -24,6 +24,7 @@ class InteractifPageState extends State<InteractifPage> {
     "Oignon": true,
   };
 
+  DateTime initialDate = DateTime.now();
   int groupValue = 1;
 
   @override
@@ -66,18 +67,13 @@ class InteractifPageState extends State<InteractifPage> {
               ),
             ),
             ElevatedButton(
-              onPressed: () {
-                print("Salut");
-              },
-              child: const Text(
-                "Elevated",
-                style: TextStyle(color: Colors.red),
-              ),
+              onPressed: (() => showDate(context)),
+              child: Text("$initialDate"),
               onLongPress: () {
                 print("Salut loooong");
               },
               style: ElevatedButton.styleFrom(
-                primary: Colors.yellow,
+                primary: Colors.black,
                 elevation: 10,
                 shadowColor: Colors.green,
               ),
@@ -242,6 +238,21 @@ class InteractifPageState extends State<InteractifPage> {
       radios.add(r);
     }
     return Row(children: radios,);
+  }
+
+  void showDate(BuildContext context){
+    showDatePicker(
+        context: context,
+        initialDate: initialDate,
+        firstDate: DateTime(1978),
+        lastDate: DateTime(2090)
+    ).then((value) => {
+      if (value != null){
+        setState(() {
+          initialDate = value;
+        })
+      }
+    });
   }
 
 }
