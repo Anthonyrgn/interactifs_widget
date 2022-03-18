@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
 class InteractifPage extends StatefulWidget {
   @override
@@ -21,8 +22,9 @@ class InteractifPageState extends State<InteractifPage> {
   Map<String, bool> courses = {
     "Carottes": false,
     "Oignon": true,
-    "Abricot": false,
   };
+
+  int groupValue = 1;
 
   @override
   void initState() {
@@ -134,19 +136,26 @@ class InteractifPageState extends State<InteractifPage> {
                     }))
               ],
             ),
-            Slider(value: sliderValue, min: 0, max: 100, onChanged: ((newValue){
-              setState(() {
-                sliderValue = newValue;
-              });
-            }),
+            Slider(
+              value: sliderValue,
+              min: 0,
+              max: 100,
+              onChanged: ((newValue) {
+                setState(() {
+                  sliderValue = newValue;
+                });
+              }),
               thumbColor: Colors.deepPurple,
               inactiveColor: Colors.green,
               activeColor: Colors.red,
             ),
             Text("Valeur : ${sliderValue.toInt()}"),
-            Checkbox(value: check, onChanged: ((newBool) => setState(()
-            => check = newBool ?? false))),
+            Checkbox(
+                value: check,
+                onChanged: ((newBool) =>
+                    setState(() => check = newBool ?? false))),
             checks(),
+            radios(),
           ],
         ),
       ),
@@ -155,14 +164,14 @@ class InteractifPageState extends State<InteractifPage> {
         child: const Icon(Icons.build),
       ),
       floatingActionButtonLocation:
-          FloatingActionButtonLocation.miniCenterFloat,
+      FloatingActionButtonLocation.miniCenterFloat,
     );
   }
 
   updateColors() {
     return setState(() {
       backgroundColor =
-          (backgroundColor == Colors.white) ? Colors.black : Colors.white;
+      (backgroundColor == Colors.white) ? Colors.black : Colors.white;
       textColor = (textColor == Colors.black) ? Colors.white : Colors.black;
     });
   }
@@ -179,9 +188,9 @@ class InteractifPageState extends State<InteractifPage> {
     return const Text(
       "Je suis un TextButton",
       style: TextStyle(
-          //color: Colors.pink,
-          //backgroundColor: Colors.grey
-          ),
+        //color: Colors.pink,
+        //backgroundColor: Colors.grey
+      ),
     );
   }
 
@@ -191,7 +200,7 @@ class InteractifPageState extends State<InteractifPage> {
     });
   }
 
-  Column checks(){
+  Column checks() {
     List<Widget> items = [];
     courses.forEach((course, achete) {
       Widget row = Row(
@@ -199,11 +208,16 @@ class InteractifPageState extends State<InteractifPage> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(course),
-          Checkbox(value: achete, onChanged: ((newValue) {
-            setState(() {
-              courses[course] = newValue ?? false;
-            });
-          }))
+          Checkbox(
+            value: achete,
+            onChanged: ((newValue) {
+              setState(() {
+                courses[course] = newValue ?? false;
+              });
+            }),
+            checkColor: Colors.green,
+            activeColor: Colors.red,
+          )
         ],
       );
       items.add(row);
@@ -212,4 +226,22 @@ class InteractifPageState extends State<InteractifPage> {
       children: items,
     );
   }
+
+  Row radios(){
+    List<Widget> radios = [];
+    for (var i = 0; i < 5; i++){
+      Radio r = Radio(
+        activeColor: Colors.greenAccent,
+          value: i,
+          groupValue: groupValue,
+          onChanged: ((newValue) {
+            setState(() {
+              groupValue = newValue as int;
+            });
+          }));
+      radios.add(r);
+    }
+    return Row(children: radios,);
+  }
+
 }
